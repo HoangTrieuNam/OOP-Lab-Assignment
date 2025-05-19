@@ -1,13 +1,11 @@
 package model;
 
 public class Admin extends User {
-
-    // Constructor không cần truyền userRole vì luôn là "admin"
-    public Admin(String userId, String userName, String userPassword, String userRegisterTime) {
-        super(userId, userName, userPassword, userRegisterTime, "admin");
+    public Admin(String userId, String userName, String userPassword,
+                 String userRegisterTime, String userRole) {
+        super(userId, userName, userPassword, userRegisterTime, userRole);
     }
 
-    // Default constructor
     public Admin() {
         super();
         this.userRole = "admin";

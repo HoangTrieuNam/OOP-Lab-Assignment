@@ -1,14 +1,11 @@
 package operation;
 
 import model.*;
-import java.util.*;
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 public class UserOperation {
     private static UserOperation instance;
-
     private final String USER_FILE = "data/users.txt";
     private final Random random = new Random();
 
@@ -22,43 +19,32 @@ public class UserOperation {
     }
 
     public String generateUniqueUserId() {
-        String id = "u_";
+        StringBuilder id = new StringBuilder("u_");
         for (int i = 0; i < 10; i++) {
-            id += random.nextInt(10);
+            id.append(random.nextInt(10));
         }
-        return id;
+        return id.toString();
     }
 
     public String encryptPassword(String userPassword) {
         String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        StringBuilder randomString = new StringBuilder();
-        int len = userPassword.length() * 2;
-        for (int i = 0; i < len; i++) {
-            randomString.append(chars.charAt(random.nextInt(chars.length())));
-        }
-
         StringBuilder encrypted = new StringBuilder("^^");
-        for (int i = 0; i < userPassword.length(); i++) {
-            encrypted.append(randomString.charAt(2 * i));
-            encrypted.append(randomString.charAt(2 * i + 1));
-            encrypted.append(userPassword.charAt(i));
+        for (char ch : userPassword.toCharArray()) {
+            encrypted.append(chars.charAt(random.nextInt(chars.length())));
+            encrypted.append(chars.charAt(random.nextInt(chars.length())));
+            encrypted.append(ch);
         }
         encrypted.append("$$");
         return encrypted.toString();
     }
 
     public String decryptPassword(String encryptedPassword) {
-        if (!encryptedPassword.startsWith("^^") || !encryptedPassword.endsWith("$$")) {
-            return null;
-        }
-
+        if (!encryptedPassword.startsWith("^^") || !encryptedPassword.endsWith("$$")) return null;
         String content = encryptedPassword.substring(2, encryptedPassword.length() - 2);
         StringBuilder original = new StringBuilder();
-
         for (int i = 2; i < content.length(); i += 3) {
             original.append(content.charAt(i));
         }
-
         return original.toString();
     }
 
@@ -66,13 +52,9 @@ public class UserOperation {
         try (BufferedReader br = new BufferedReader(new FileReader(USER_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.contains("\"user_name\":\"" + userName + "\"")) {
-                    return true;
-                }
+                if (line.contains("\"user_name\":\"" + userName + "\"")) return true;
             }
-        } catch (IOException e) {
-            return false;
-        }
+        } catch (IOException ignored) {}
         return false;
     }
 
@@ -93,17 +75,14 @@ public class UserOperation {
                     String decrypted = decryptPassword(encrypted);
                     if (decrypted != null && decrypted.equals(userPassword)) {
                         if (line.contains("\"user_role\":\"admin\"")) {
-                            return new Admin(); // stub, replace with full parsing
+                            return new Admin(); // Simplified
                         } else {
-                            return new Customer(); // stub, replace with full parsing
+                            return new Customer(); // Simplified
                         }
                     }
                 }
             }
-        } catch (IOException e) {
-            return null;
-        }
+        } catch (IOException ignored) {}
         return null;
     }
 }
-

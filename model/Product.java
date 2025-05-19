@@ -10,9 +10,8 @@ public class Product {
     private double proDiscount;
     private int proLikesCount;
 
-    public Product(String proId, String proModel, String proCategory,
-                   String proName, double proCurrentPrice, double proRawPrice,
-                   double proDiscount, int proLikesCount) {
+    public Product(String proId, String proModel, String proCategory, String proName,
+                   double proCurrentPrice, double proRawPrice, double proDiscount, int proLikesCount) {
         this.proId = proId;
         this.proModel = proModel;
         this.proCategory = proCategory;
@@ -44,7 +43,7 @@ public class Product {
         );
     }
 
-    // Getters (optional for future use)
+    // Getters (optional)
     public String getProId() { return proId; }
     public String getProModel() { return proModel; }
     public String getProCategory() { return proCategory; }
@@ -54,4 +53,3 @@ public class Product {
     public double getProDiscount() { return proDiscount; }
     public int getProLikesCount() { return proLikesCount; }
 }
-

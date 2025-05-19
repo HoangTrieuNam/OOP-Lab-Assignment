@@ -28,7 +28,7 @@ public class Order {
         );
     }
 
-    // Getters (optional for use in operations)
+    // Getters (optional)
     public String getOrderId() { return orderId; }
     public String getUserId() { return userId; }
     public String getProId() { return proId; }
