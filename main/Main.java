@@ -105,7 +105,7 @@ public class Main {
     private static void customerMenu() {
         boolean stay = true;
         while (stay) {
-            io.showCustomerMenu();
+            io.customerMenu();
             System.out.print("Enter choice: ");
             String choice = scanner.nextLine();
 
